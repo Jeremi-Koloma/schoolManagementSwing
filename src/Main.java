@@ -13,7 +13,8 @@ public class Main {
         // pour que le contenu s'adapte à son container
         fenetre.pack();
         // taille de la fenetre
-        fenetre.setLocation(100, 100);
+        fenetre.setLocationRelativeTo(null); // pour centrer la fenetre au milieu de screen
+        //fenetre.setLocation(100, 100);
         // on rend la fenêtre visible
         fenetre.setVisible(true);
     }
