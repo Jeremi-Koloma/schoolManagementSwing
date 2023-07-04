@@ -10,16 +10,15 @@ import java.sql.Statement;
 public class LoginForm extends JPanel implements ActionListener {
     // Décarations des variables
 
-    public JPasswordField passwordInput = new JPasswordField(15);
-    public JTextField usernameInput = new JTextField(15);
-    public JButton loginButton = new JButton("Se connecter");
+    JTextField usernameInput = new JTextField(15);
+    JPasswordField passwordInput = new JPasswordField(15);
+    JButton loginButton = new JButton("Se connecter");
+
+    // Création de la fénêtre
+    JFrame fenetreLogin = new JFrame("Formulaire d'Authentification");
 
 
     public LoginForm() {
-        setPreferredSize( new Dimension( 500, 500) );
-        //setBounds(0, 0, 250, 250);
-        setBackground(Color.WHITE);
-
 
         // Titre du Formulaire
         JLabel titreForm = new JLabel("LOGIN");
@@ -80,6 +79,25 @@ public class LoginForm extends JPanel implements ActionListener {
 
         // Ajout du copyRight au panneau
         this.add(textCopyRight);
+
+
+
+
+
+        setPreferredSize( new Dimension( 500, 500) );
+        //setBounds(0, 0, 250, 250);
+        setBackground(Color.WHITE);
+        // Ajout d'un panneau à notre fenêtre
+        fenetreLogin.setContentPane(this);
+        // Pour que le programme ne tourne pas en arrière plan
+        fenetreLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetreLogin.setLayout(null);
+        // pour que le contenu s'adapte à son container
+        fenetreLogin.pack();
+        // taille de la fenetre
+        fenetreLogin.setLocationRelativeTo(null); // pour centrer la fenetre au milieu de screen
+        // on rend la fenêtre visible
+        fenetreLogin.setVisible(true);
     }
 
 
@@ -120,12 +138,18 @@ public class LoginForm extends JPanel implements ActionListener {
 
                 if(resultSet.next()){
                     // Si le username et le mots de passe sont correcte, on l'envoie à la page d'accueil
+                    // Femeture de la fenêtre login
+                    fenetreLogin.dispose();
+                    // Overture de la page d'Accueil
+                    PageAccueilMain pageAccueilMain =  new PageAccueilMain();
                     System.out.println("----- Connexion Reussi ---");
+
                 } else {
                     System.out.println("----- Connexion Non Reussi ---");
                     // on renitialise les valeurs dans champs input
                     usernameInput.setText("");
                     passwordInput.setText("");
+                    JOptionPane.showMessageDialog(null,"Mots de passe ou nom d'utilisateur incorrect !","Erreur !",JOptionPane.ERROR_MESSAGE);
 
                 }
 
