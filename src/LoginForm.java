@@ -2,11 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class LoginForm extends JPanel implements ActionListener {
     // Décarations des variables
 
-    public JPasswordField passwordInput = new JPasswordField();
+    public JPasswordField passwordInput = new JPasswordField(15);
     public JTextField usernameInput = new JTextField(15);
     public JButton loginButton = new JButton("Se connecter");
 
@@ -47,6 +51,7 @@ public class LoginForm extends JPanel implements ActionListener {
         loginButton.setForeground(new Color(0xFFFFFF));
         loginButton.setOpaque(true);
         loginButton.setBorderPainted(false);
+        loginButton.setFocusable(false);
         // Plaçons un écouteur au bouton login
         loginButton.addActionListener(this);
 
@@ -94,6 +99,44 @@ public class LoginForm extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null,"Mots de passe obligatoire !","Attention !",JOptionPane.WARNING_MESSAGE);
                 System.out.println("--- Password is required !---");
             }
+
+
+
+
+            try {
+                // Ouverture de la connexion
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestionetudiant?characterEncoding=latin1&useConfigs=maxPerformance","root","70951335");
+
+                // Acceptation de username et de mots de passe
+                // Récupérons les infos
+                String username = usernameInput.getText();
+                String password = String.valueOf(passwordInput.getPassword());
+
+                Statement statement = connection.createStatement();
+                // Exécution de la requête SQL
+                String sql = "select * from gestionetudiant.login where username ='"+username+"' and password='"+password+"'";
+                ResultSet resultSet = statement.executeQuery(sql);
+
+                if(resultSet.next()){
+                    // Si le username et le mots de passe sont correcte, on l'envoie à la page d'accueil
+                    System.out.println("----- Connexion Reussi ---");
+                } else {
+                    System.out.println("----- Connexion Non Reussi ---");
+                    // on renitialise les valeurs dans champs input
+                    usernameInput.setText("");
+                    passwordInput.setText("");
+
+                }
+
+                // Fermeture de la requête
+                connection.close();
+
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
+
 
         }
     }
