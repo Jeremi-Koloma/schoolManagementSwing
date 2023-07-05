@@ -116,49 +116,51 @@ public class LoginForm extends JPanel implements ActionListener {
             }else if (passwordInput.getText().equals("")){
                 JOptionPane.showMessageDialog(null,"Mots de passe obligatoire !","Attention !",JOptionPane.WARNING_MESSAGE);
                 System.out.println("--- Password is required !---");
-            }
+            } else if (!usernameInput.getText().equals("") && !passwordInput.getText().equals("")){
+                try {
+                    // Ouverture de la connexion
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestionetudiant?characterEncoding=latin1&useConfigs=maxPerformance","root","70951335");
 
+                    // Acceptation de username et de mots de passe
+                    // Récupérons les infos
+                    String username = usernameInput.getText();
+                    String password = String.valueOf(passwordInput.getPassword());
 
+                    Statement statement = connection.createStatement();
+                    // Exécution de la requête SQL
+                    String sql = "select * from gestionetudiant.login where username ='"+username+"' and password='"+password+"'";
+                    ResultSet resultSet = statement.executeQuery(sql);
 
+                    if(resultSet.next()){
+                        // Si le username et le mots de passe sont correcte, on l'envoie à la page d'accueil
+                        // Femeture de la fenêtre login
+                        fenetreLogin.dispose();
+                        // Overture de la page d'Accueil
+                        PageAccueilMain pageAccueilMain =  new PageAccueilMain();
+                        System.out.println("----- Connexion Reussi ---");
 
-            try {
-                // Ouverture de la connexion
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestionetudiant?characterEncoding=latin1&useConfigs=maxPerformance","root","70951335");
+                    } else {
+                        System.out.println("----- Connexion Non Reussi ---");
+                        // on renitialise les valeurs dans champs input
+                        usernameInput.setText("");
+                        passwordInput.setText("");
+                        JOptionPane.showMessageDialog(null,"Mots de passe ou nom d'utilisateur incorrect !","Erreur !",JOptionPane.ERROR_MESSAGE);
 
-                // Acceptation de username et de mots de passe
-                // Récupérons les infos
-                String username = usernameInput.getText();
-                String password = String.valueOf(passwordInput.getPassword());
+                    }
 
-                Statement statement = connection.createStatement();
-                // Exécution de la requête SQL
-                String sql = "select * from gestionetudiant.login where username ='"+username+"' and password='"+password+"'";
-                ResultSet resultSet = statement.executeQuery(sql);
+                    // Fermeture de la requête
+                    connection.close();
 
-                if(resultSet.next()){
-                    // Si le username et le mots de passe sont correcte, on l'envoie à la page d'accueil
-                    // Femeture de la fenêtre login
-                    fenetreLogin.dispose();
-                    // Overture de la page d'Accueil
-                    PageAccueilMain pageAccueilMain =  new PageAccueilMain();
-                    System.out.println("----- Connexion Reussi ---");
-
-                } else {
-                    System.out.println("----- Connexion Non Reussi ---");
-                    // on renitialise les valeurs dans champs input
-                    usernameInput.setText("");
-                    passwordInput.setText("");
-                    JOptionPane.showMessageDialog(null,"Mots de passe ou nom d'utilisateur incorrect !","Erreur !",JOptionPane.ERROR_MESSAGE);
-
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
                 }
-
-                // Fermeture de la requête
-                connection.close();
-
-            }catch (Exception e){
-                System.out.println(e.getMessage());
             }
+
+
+
+
+
 
 
 
