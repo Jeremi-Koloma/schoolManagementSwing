@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class PageAccueilForm extends JPanel {
+public class PageAccueilForm extends JPanel implements ActionListener {
 
     // Créons une fenêtre
     JFrame fenetreAccueilForm = new JFrame();
@@ -43,6 +45,8 @@ public class PageAccueilForm extends JPanel {
         gestionFiliere.setOpaque(true);
         gestionFiliere.setBorderPainted(false);
         gestionFiliere.setFocusable(false);
+        // ajout d'un ecouteur au boutons
+        gestionFiliere.addActionListener(this);
 
         // Ajoutons du bouton gestion Matiere au panneau
         this.add(gestionMatiere);
@@ -97,5 +101,20 @@ public class PageAccueilForm extends JPanel {
         //this.setLocation(300, 100);
         // on rend la fenêtre visible
         fenetreAccueilForm.setVisible(true);
+    }
+
+
+
+
+
+
+    // Traitement
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        // Gettons le boutons Gestion Filiere
+        if (event.getSource() == gestionFiliere){
+            // Ouverture de la page Gestion Filière !
+            FiliereForm filiereForm = new FiliereForm();
+        }
     }
 }
