@@ -57,6 +57,9 @@ public class PageAccueil extends JPanel implements ActionListener {
         gestionMatiere.setOpaque(true);
         gestionMatiere.setBorderPainted(false);
         gestionMatiere.setFocusable(false);
+        // Plaçons un écouteur au bouton gestion matiere
+        gestionMatiere.addActionListener(this);
+
 
         // Ajoutons du bouton gestion Etudiant au panneau
         this.add(gestionEtudiant);
@@ -114,6 +117,12 @@ public class PageAccueil extends JPanel implements ActionListener {
         if (event.getSource() == gestionFiliere){
             // Ouverture de la page Gestion Filière !
             GestionFilierePage gestionFilierePage = new GestionFilierePage();
+        }
+
+        // Vérifions si le click correspond au boutons gestion Matiere
+        if (event.getSource() == gestionMatiere){
+            // Overture de la page gestion Matiere
+            GestionPageMatiere gestionPageMatiere = new GestionPageMatiere();
         }
     }
 }
