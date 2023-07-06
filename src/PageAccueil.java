@@ -16,7 +16,6 @@ public class PageAccueil extends JPanel implements ActionListener {
 
     public PageAccueil() {
         this.setPreferredSize( new Dimension( 900, 600) );
-        //setBounds(0, 0, 250, 250);
         this.setBackground(Color.WHITE);
 
         // créons la bare de Menu

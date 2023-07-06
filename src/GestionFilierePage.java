@@ -1,10 +1,12 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class GestionFilierePage extends JPanel {
+public class GestionFilierePage extends JPanel implements ActionListener {
 
     JFrame fenetreFiliere = new JFrame();
 
@@ -17,7 +19,6 @@ public class GestionFilierePage extends JPanel {
 
     public GestionFilierePage(){
         this.setPreferredSize( new Dimension( 650, 450) );
-        //setBounds(0, 0, 250, 250);
         this.setBackground(Color.WHITE);
 
 
@@ -37,6 +38,8 @@ public class GestionFilierePage extends JPanel {
         btnAjoutFiliere.setOpaque(true);
         btnAjoutFiliere.setFocusable(false);
         btnAjoutFiliere.setBorderPainted(false);
+        // Ajouter un écouteur au bouton Ajout filière
+        btnAjoutFiliere.addActionListener(this);
 
 
         // Bouton modifier Filière
@@ -118,11 +121,24 @@ public class GestionFilierePage extends JPanel {
 
 
 
-    //
+    // Méthode de dessin
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         graphics.drawImage(bigIconCenter, 360, 100, 250, 250, this);
 
 
+    }
+
+
+
+
+    // Traitement Logique
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        // Gettons le boutons Ajout d'une nouvelle filière
+        if (event.getSource() == btnAjoutFiliere){
+            // Ouverture du formulaire ajout filière
+            AjoutFiliereForm ajoutFiliereForm = new AjoutFiliereForm();
+        }
     }
 }

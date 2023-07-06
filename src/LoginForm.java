@@ -19,6 +19,8 @@ public class LoginForm extends JPanel implements ActionListener {
 
 
     public LoginForm() {
+        setPreferredSize( new Dimension( 500, 500) );
+        setBackground(Color.WHITE);
 
         // Titre du Formulaire
         JLabel titreForm = new JLabel("LOGIN");
@@ -62,21 +64,16 @@ public class LoginForm extends JPanel implements ActionListener {
 
 
 
-
         // Ajouter du titre Formulaire au panneau
         this.add(titreForm);
-
         // Ajouter username infos au panneau
         this.add(usernameField);
         this.add(usernameInput);
-
         // Ajouter password infos au panneau
         this.add(passwordField);
         this.add(passwordInput);
-
         // Ajouter du bouton login au panneau
         this.add(loginButton);
-
         // Ajout du copyRight au panneau
         this.add(textCopyRight);
 
@@ -84,9 +81,6 @@ public class LoginForm extends JPanel implements ActionListener {
 
 
 
-        setPreferredSize( new Dimension( 500, 500) );
-        //setBounds(0, 0, 250, 250);
-        setBackground(Color.WHITE);
         // Ajout d'un panneau à notre fenêtre
         fenetreLogin.setContentPane(this);
         // Pour que le programme ne tourne pas en arrière plan
@@ -110,15 +104,16 @@ public class LoginForm extends JPanel implements ActionListener {
         // Gettons le boutton Login
         if (event.getSource() == loginButton){
             // vérifions le nom d'utilisateur ou le mots de passe ne sont pas vide
-            if (usernameInput.getText().equals("")){
+            if (usernameInput.getText().equals("") || usernameInput.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null,"Nom d'utilisateur obligatoire !","Attention !",JOptionPane.WARNING_MESSAGE);
                 System.out.println("--- Username is required !---");
-            }else if (passwordInput.getText().equals("")){
+            }else if (passwordInput.getText().equals("") || String.valueOf(passwordInput.getPassword()).isEmpty()){
                 JOptionPane.showMessageDialog(null,"Mots de passe obligatoire !","Attention !",JOptionPane.WARNING_MESSAGE);
                 System.out.println("--- Password is required !---");
-            } else if (!usernameInput.getText().equals("") && !passwordInput.getText().equals("")){
+            }
+            else if (!usernameInput.getText().equals("") &&  !passwordInput.getText().equals("")){
                 try {
-                    // Ouverture de la connexion
+                    // Ouverture de la connexion avec la base de donnée
                     Class.forName("com.mysql.jdbc.Driver");
                     Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestionetudiant?characterEncoding=latin1&useConfigs=maxPerformance","root","70951335");
 
@@ -129,7 +124,7 @@ public class LoginForm extends JPanel implements ActionListener {
 
                     Statement statement = connection.createStatement();
                     // Exécution de la requête SQL
-                    String sql = "select * from gestionetudiant.login where username ='"+username+"' and password='"+password+"'";
+                    String sql = "SELECT * FROM gestionetudiant.login WHERE username ='"+username+"' and password='"+password+"'";
                     ResultSet resultSet = statement.executeQuery(sql);
 
                     if(resultSet.next()){
@@ -150,6 +145,7 @@ public class LoginForm extends JPanel implements ActionListener {
                     }
 
                     // Fermeture de la requête
+                    statement.close();
                     connection.close();
 
                 }catch (Exception e){
@@ -157,13 +153,10 @@ public class LoginForm extends JPanel implements ActionListener {
                 }
             }
 
-
-
-
-
-
-
-
         }
+
+
     }
+
+
 }
