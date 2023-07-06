@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PageAccueilForm extends JPanel implements ActionListener {
+public class PageAccueil extends JPanel implements ActionListener {
 
     // Créons une fenêtre
     JFrame fenetreAccueilForm = new JFrame();
@@ -14,7 +14,7 @@ public class PageAccueilForm extends JPanel implements ActionListener {
     JButton gestionEtudiant = new JButton("Gestion Étudiant");
 
 
-    public PageAccueilForm() {
+    public PageAccueil() {
         this.setPreferredSize( new Dimension( 900, 600) );
         //setBounds(0, 0, 250, 250);
         this.setBackground(Color.WHITE);
@@ -114,7 +114,7 @@ public class PageAccueilForm extends JPanel implements ActionListener {
         // Gettons le boutons Gestion Filiere
         if (event.getSource() == gestionFiliere){
             // Ouverture de la page Gestion Filière !
-            FiliereForm filiereForm = new FiliereForm();
+            GestionFilierePage gestionFilierePage = new GestionFilierePage();
         }
     }
 }

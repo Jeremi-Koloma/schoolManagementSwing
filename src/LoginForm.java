@@ -137,7 +137,7 @@ public class LoginForm extends JPanel implements ActionListener {
                         // Femeture de la fenêtre login
                         fenetreLogin.dispose();
                         // Overture de la page d'Accueil
-                        PageAccueilMain pageAccueilMain =  new PageAccueilMain();
+                        PageAccueil pageAccueil = new PageAccueil();
                         System.out.println("----- Connexion Reussi ---");
 
                     } else {
