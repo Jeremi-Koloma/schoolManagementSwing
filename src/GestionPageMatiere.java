@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class GestionPageMatiere extends JPanel {
+public class GestionPageMatiere extends JPanel implements ActionListener {
     // Creation de la fenetre
     JFrame fenetreGestionPageMatiere = new JFrame();
 
@@ -28,6 +30,8 @@ public class GestionPageMatiere extends JPanel {
         btnAjoutMatiere.setOpaque(true);
         btnAjoutMatiere.setFocusable(false);
         btnAjoutMatiere.setBorderPainted(false);
+        // Plaçons un écouteur au bouton ajout matiere
+        btnAjoutMatiere.addActionListener(this);
 
 
 
@@ -63,4 +67,17 @@ public class GestionPageMatiere extends JPanel {
 
 
 
+
+
+
+    // Traiment Logique
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        // Gettons le bouton ajout matiere
+        if (event.getSource() == btnAjoutMatiere){
+            // Overture de page formulaire d'ajout matière
+            AjoutMatiereForm ajoutMatiereForm = new AjoutMatiereForm();
+        }
+
+    }
 }
