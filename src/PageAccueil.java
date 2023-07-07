@@ -71,6 +71,8 @@ public class PageAccueil extends JPanel implements ActionListener {
         gestionEtudiant.setOpaque(true);
         gestionEtudiant.setBorderPainted(false);
         gestionEtudiant.setFocusable(false);
+        // plaçons l'ecouteur au bouton
+        gestionEtudiant.addActionListener(this);
 
 
 
@@ -123,6 +125,12 @@ public class PageAccueil extends JPanel implements ActionListener {
         if (event.getSource() == gestionMatiere){
             // Overture de la page gestion Matiere
             GestionPageMatiere gestionPageMatiere = new GestionPageMatiere();
+        }
+
+        // Vérifions si le click correspond au boutons gestion Etudiant
+        if (event.getSource() == gestionEtudiant){
+            // Overture de la page gestion Etudiant
+            GestionEtudiantPage gestionEtudiantPage = new GestionEtudiantPage();
         }
     }
 }
